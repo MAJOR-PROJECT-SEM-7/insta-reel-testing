@@ -1,69 +1,59 @@
-# React + TypeScript + Vite
+# Insta Reel Testing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React application with authentication system for testing Instagram reels.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Authentication System**: Login/logout functionality with token-based authentication
+- **Protected Routes**: Dashboard is only accessible to authenticated users
+- **Automatic Redirects**: Users are redirected to appropriate pages based on authentication status
+- **Token Management**: Automatic token verification and storage
 
-## Expanding the ESLint configuration
+## Authentication Flow
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+1. **Initial Load**: The app checks if a valid token exists in localStorage
+2. **Not Authenticated**: User is redirected to `/login` page
+3. **Login Success**: User is redirected to `/dashboard` page
+4. **Dashboard Access**: Only authenticated users can access the dashboard
+5. **Logout**: User is logged out and redirected to `/login`
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## API Endpoints
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+The application uses the following API endpoints (configured in `src/utils.ts`):
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `POST /api/auth/login` - User login
+- `GET /api/auth/check-login` - Verify authentication status
+
+## Getting Started
+
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+3. Open your browser and navigate to `http://localhost:5173`
+
+## Project Structure
+
+```
+src/
+├── App.tsx              # Main app component with routing
+├── pages/
+│   ├── login.tsx        # Login page component
+│   └── dashboard.tsx    # Dashboard page component
+├── utils.ts             # API utility functions
+└── types.ts             # TypeScript type definitions
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Technologies Used
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- React 19
+- TypeScript
+- React Router DOM
+- Axios for API calls
+- Tailwind CSS for styling
